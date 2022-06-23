@@ -58,15 +58,16 @@ SELECT COUNT(title), rating
 FROM film
 GROUP BY DISTINCT rating;
 
+
 -- 7. Show all customers who have made a single payment above $6.99 (use subqueries)
--- do you mean customers who made literally one payment above 6.99, or have made at least one payment above 6.99?
 SELECT first_name, last_name
 FROM customer
 WHERE customer_id IN (
     SELECT customer_id
     FROM payment
-    GROUP BY amount, customer_id
-    HAVING amount > 6.99
+    WHERE amount > 6.99
+    GROUP BY customer_id
+    HAVING COUNT(amount) = 1
 );
 
 
